@@ -13,6 +13,7 @@ import rx.Observable;
 public class ApiClient {
     static Retrofit mRetrofit;
     private static final String BASEURL = "https://newsapi.org/v1/";
+    private static final String APIKEY = "9204fb99bbb9437c95f5661a44bba683";
 
     public static Retrofit retrofit() {
         if (mRetrofit == null) {
@@ -27,7 +28,7 @@ public class ApiClient {
 
     public interface ApiStores {
 
-        @GET("sources?language=en&apiKey=9204fb99bbb9437c95f5661a44bba683")
+        @GET("sources?language=en")
         Observable<SourceResponse> getSources();
     }
 }

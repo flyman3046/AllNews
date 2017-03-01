@@ -1,5 +1,6 @@
-package com.example.flyman3046.allnews;
+package com.example.flyman3046.allnews.Model;
 
+import com.example.flyman3046.allnews.Model.Source;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.example.flyman3046.allnews.Model.ApiClient;
+import com.example.flyman3046.allnews.Model.Article;
+import com.example.flyman3046.allnews.Model.ArticleResponse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Source> mSourceList = new ArrayList<>();
+    private List<Article> mSourceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         // specify an adapter (see also next example)
-        mAdapter = new MainNewsAdapter(this, mSourceList);
+        mAdapter = new MainArticleAdapter(this, mSourceList);
         mRecyclerView.setAdapter(mAdapter);
 
         loadSearchItem();
@@ -49,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         Log.wtf(TAG, "Start to get json");
         ApiClient.ApiStores apiStores = ApiClient.retrofit().create(ApiClient.ApiStores.class);
 
-        Observable<SourceResponse> observable = apiStores.getSources();
+        Observable<ArticleResponse> observable = apiStores.getArticles();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SourceResponse>() {
+                .subscribe(new Observer<ArticleResponse>() {
                     @Override
                     public void onCompleted() {
                         Log.wtf(TAG, "onCompleted");
@@ -63,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(SourceResponse result) {
+                    public void onNext(ArticleResponse result) {
                         Log.wtf(TAG, "search result size is: " + result.getStatus());
                         mSourceList.clear();
-                        mSourceList.addAll(result.getSources());
+                        mSourceList.addAll(result.getArticles());
                         mAdapter.notifyDataSetChanged();
                     }
                 });

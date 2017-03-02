@@ -1,13 +1,9 @@
-package com.example.flyman3046.allnews;
-
-import java.util.List;
+package com.example.flyman3046.allnews.Model;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import rx.Observable;
 
 public class ApiClient {
@@ -30,5 +26,8 @@ public class ApiClient {
 
         @GET("sources?language=en")
         Observable<SourceResponse> getSources();
+
+        @GET("articles?source=techcrunch&apiKey=" + APIKEY)
+        Observable<ArticleResponse> getArticles();
     }
 }

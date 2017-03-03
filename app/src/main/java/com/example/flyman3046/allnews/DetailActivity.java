@@ -58,7 +58,6 @@ public class DetailActivity extends AppCompatActivity {
 
     // Title AsyncTask
     private class ContentCrawl extends AsyncTask<String, Void, Void> {
-        String title;
         Elements element;
 
         @Override

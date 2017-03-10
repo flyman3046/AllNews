@@ -1,15 +1,18 @@
 package com.example.flyman3046.allnews.Model;
 
+import java.util.List;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public class ApiClient {
     static Retrofit mRetrofit;
     private static final String BASEURL = "https://newsapi.org/v1/";
-    private static final String APIKEY = "9204fb99bbb9437c95f5661a44bba683";
+    public static final String APIKEY = "9204fb99bbb9437c95f5661a44bba683";
 
     public static Retrofit retrofit() {
         if (mRetrofit == null) {
@@ -27,7 +30,10 @@ public class ApiClient {
         @GET("sources?language=en")
         Observable<SourceResponse> getSources();
 
-        @GET("articles?source=techcrunch&apiKey=" + APIKEY)
-        Observable<ArticleResponse> getArticles();
+        @GET("articles?")
+        Observable<ArticleResponse> getArticles(
+                @Query("source") String source,
+                @Query("apiKey") String apiKey);
+
     }
 }

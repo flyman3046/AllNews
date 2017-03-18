@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,8 +23,9 @@ import java.io.IOException;
  */
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = DetailActivity.class.getSimpleName();
-
     private ProgressDialog mProgressDialog;
+    private String mUrl;
+    private String mSourceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,10 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         //Need to prevent memory leak with weak reference
-        String url = getIntent().getStringExtra(DataConstants.ARTICLE_LINK_MESSAGE);
-        Log.wtf(TAG, url);
-        new ContentCrawl().execute(url);
+        mUrl = getIntent().getStringExtra(DataConstants.ARTICLE_LINK_MESSAGE);
+        mSourceName = getIntent().getStringExtra(DataConstants.ARTICLE_SOURCE_NAME);
+        Log.wtf(TAG, mUrl);
+        new ContentCrawl().execute(mUrl);
     }
 
     @Override
@@ -77,8 +80,20 @@ public class DetailActivity extends AppCompatActivity {
                 Document document = Jsoup.connect(params[0]).get();
                 // Get the html document title
 
-                element = document
-                        .select("body div[class=article-entry text]");
+                // Find correct selector based on source name
+                String searchKey = null;
+                String shortedUrl = mUrl.substring(0, Math.min(50, mUrl.length()));
+
+                for (String key: DataConstants.NEWS_SOURCE_TO_SHORT_URL_MAP.keySet()) {
+                    if (shortedUrl.contains(DataConstants.NEWS_SOURCE_TO_SHORT_URL_MAP.get(key))) {
+                        searchKey = key;
+                    }
+                }
+
+                if (searchKey != null) {
+                    element = document
+                            .select(DataConstants.NEWS_URL_TO_SELECTOR_MAP.get(mSourceName));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -88,8 +103,9 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             // Set title into TextView
-            TextView txttitle = (TextView) findViewById(R.id.test_content);
-            txttitle.setText(element.toString());
+            TextView txtTitle = (TextView) findViewById(R.id.doc_content);
+            txtTitle.setText(Html.fromHtml(element.toString()));
+
             mProgressDialog.dismiss();
         }
     }

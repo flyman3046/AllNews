@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.flyman3046.allnews.Model.ApiClient;
 import com.example.flyman3046.allnews.Model.Article;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<Article> mArticlesList = new ArrayList<>();
     private List<String> mSourceList = new ArrayList<>();
+    private boolean mIsItemUpdateSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
         loadSearchItem();
     }
 
-    private void loadSearchItem() {
+    //return true if item successfully updated, otherwise false.
+    private boolean loadSearchItem() {
+        mIsItemUpdateSuccess = false;
         Log.wtf(TAG, "Start to get json");
         final ApiClient.ApiStores apiStores = ApiClient.retrofit().create(ApiClient.ApiStores.class);
         Set<String> source = DataConstants.NEWS_SOURCE_TO_SHORT_URL_MAP.keySet();
@@ -87,10 +91,15 @@ public class MainActivity extends AppCompatActivity {
                         if (mSwipeRefreshLayout.isRefreshing()) {
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
+                        mIsItemUpdateSuccess = true;
+                        Toast.makeText(getApplicationContext(),
+                                "新闻更新完成，请陛下阅览", Toast.LENGTH_LONG).show();
                         Log.wtf(TAG, "onCompleted");
                     }
                     @Override
                     public void onError(Throwable e) {
+                        Toast.makeText(getApplicationContext(),
+                                "臣妾做不到啊！", Toast.LENGTH_LONG).show();
                         Log.wtf(TAG, e.toString());
                     }
 
@@ -103,5 +112,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        return mIsItemUpdateSuccess;
     }
 }

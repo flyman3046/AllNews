@@ -40,4 +40,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
 
     compile 'org.jsoup:jsoup:1.10.2'
+
+    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
 }

@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.bluejamesbond.text.DocumentView;
+import com.bluejamesbond.text.style.TextAlignment;
 import com.example.flyman3046.allnews.Model.DataConstants;
 
 import org.jsoup.Jsoup;
@@ -29,14 +32,12 @@ public class DetailActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private String mUrl;
     private String mSourceName;
-    private TextView mTxtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.article_detail);
 
-        mTxtTitle = (TextView) findViewById(R.id.doc_content);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.article_detail_toolbar);
         setSupportActionBar(myToolbar);
         if(getSupportActionBar() != null) {
@@ -100,7 +101,9 @@ public class DetailActivity extends AppCompatActivity {
                     public void onNext(Elements result) {
                         Log.wtf(TAG, "onNext");
                         if (result != null) {
-                            mTxtTitle.setText(Html.fromHtml(result.toString()));
+                            DocumentView documentView = new DocumentView(getApplicationContext(), DocumentView.PLAIN_TEXT);
+                            documentView.getDocumentLayoutParams().setTextAlignment(TextAlignment.JUSTIFIED);
+                            documentView.setText(Html.fromHtml(result.toString()));
                         }
                         else {
                             Log.wtf(TAG, "return a null object");

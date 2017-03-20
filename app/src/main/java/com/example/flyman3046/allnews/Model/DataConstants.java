@@ -19,7 +19,7 @@ public class DataConstants {
         myMap.put("techradar", "body div[class*=\"text-copy bodyCopy auto\"] p");
         myMap.put("ars-technica", "body div[class*=\"article-content post-page\"] p");
         myMap.put("recode", "body div[class*=\"c-entry-content\"] p");
-        myMap.put("thenextweb", "body div[class*=\"post-body fb-quotable u-m-3\"] p");
+        myMap.put("the-next-web", "body div[class*=\"post-body fb-quotable u-m-3\"] p");
         return myMap;
     }
 

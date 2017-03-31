@@ -2,6 +2,8 @@ package com.example.flyman3046.allnews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +16,12 @@ import com.example.flyman3046.allnews.Model.DataConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Map;
 
 public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.NewsCardViewHolders> {
     private List<Article> mArticleList;
     private List<String> mSourceList;
     private Context mContext;
+    private final static String TRANSIT_NAME = "imageAnimation";
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public MainArticleAdapter(Context context, List<Article> articleList, List<String> sourceList) {
@@ -49,7 +51,10 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
                 .placeholder(R.drawable.placeholder)
                 .into(holder.articleImage);
         holder.articleTitle.setText(obj.getTitle());
-        holder.articlePublishedAt.setText(obj.getPublishedAt());
+        String[] splits = obj.getPublishedAt().split("T");
+        if (splits.length >= 1) {
+            holder.articlePublishedAt.setText(splits[0]);
+        }
     }
 
     @Override
@@ -75,7 +80,17 @@ public class MainArticleAdapter extends RecyclerView.Adapter<MainArticleAdapter.
             Intent intent = new Intent(mContext, DetailActivity.class);
             intent.putExtra(DataConstants.ARTICLE_LINK_MESSAGE, mArticleList.get(getPosition()).getUrl());
             intent.putExtra(DataConstants.ARTICLE_SOURCE_NAME, mSourceList.get(getPosition()));
-            mContext.startActivity(intent);
+            intent.putExtra(DataConstants.ARTICLE_URL_IMAGE, mArticleList.get(getPosition()).getUrlToImage());
+
+            // Check if we're running on Android 5.0 or higher
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((MainActivity) mContext, articleImage, TRANSIT_NAME);
+                mContext.startActivity(intent, options.toBundle());
+            }
+            else {
+                mContext.startActivity(intent);
+            }
         }
     }
 }

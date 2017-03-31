@@ -1,15 +1,19 @@
 package com.example.flyman3046.allnews;
 
-import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.flyman3046.allnews.Model.DataConstants;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,10 +30,10 @@ import rx.schedulers.Schedulers;
  */
 public class DetailActivity extends AppCompatActivity {
     private static final String TAG = DetailActivity.class.getSimpleName();
-    private ProgressDialog mProgressDialog;
     private String mUrl;
     private String mSourceName;
     private TextView mTxtTitle;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.article_detail);
 
         mTxtTitle = (TextView) findViewById(R.id.doc_content);
+        mImageView = (ImageView) findViewById(R.id.article_image);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.article_detail_toolbar);
         setSupportActionBar(myToolbar);
         if(getSupportActionBar() != null) {
@@ -49,11 +54,32 @@ public class DetailActivity extends AppCompatActivity {
         mSourceName = getIntent().getStringExtra(DataConstants.ARTICLE_SOURCE_NAME);
         Log.wtf(TAG, mUrl);
 
-        mProgressDialog = new ProgressDialog(DetailActivity.this);
-        mProgressDialog.setTitle("Android Basic JSoup Tutorial");
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.setIndeterminate(false);
-        mProgressDialog.show();
+        // Check if we're running on Android 5.0 or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            supportPostponeEnterTransition();
+            Picasso.with(this)
+                    .load(getIntent().getStringExtra(DataConstants.ARTICLE_URL_IMAGE))
+                    .noFade()
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(mImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            supportStartPostponedEnterTransition();
+                        }
+
+                        @Override
+                        public void onError() {
+                            supportStartPostponedEnterTransition();
+                        }
+                    });
+        }
+        else {
+            Picasso.with(this)
+                    .load(getIntent().getStringExtra(DataConstants.ARTICLE_URL_IMAGE))
+                    .noFade()
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(mImageView);
+        }
 
         Observable.just(mUrl)
                 .map(new Func1<String, Elements>() {
@@ -89,7 +115,6 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         Log.wtf(TAG, "onCompleted");
-                        mProgressDialog.dismiss();
                     }
                     @Override
                     public void onError(Throwable e) {

@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="actionButtonStyle">@style/myActionButtonStyle</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="myActionButtonStyle" parent="Widget.AppCompat.ActionButton">

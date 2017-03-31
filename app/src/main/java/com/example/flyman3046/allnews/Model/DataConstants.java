@@ -9,6 +9,7 @@ import java.util.Map;
 public class DataConstants {
     public static final String ARTICLE_LINK_MESSAGE = "article_link";
     public static final String ARTICLE_SOURCE_NAME = "article_source_name";
+    public static final String ARTICLE_URL_IMAGE = "getUrlToImage";
 
     public static final Map<String, String> NEWS_URL_TO_SELECTOR_MAP = createUrl2SelectorMap();
     private static Map<String, String> createUrl2SelectorMap()

@@ -23,11 +23,23 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="18sp"
-            android:id="@+id/doc_content"/>
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/article_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:transitionName="imageAnimation"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textSize="18sp"
+                android:id="@+id/doc_content"/>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

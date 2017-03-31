@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews;
+package com.flyman3046.allnews;
 
 import org.junit.Test;
 

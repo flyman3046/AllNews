@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews;
+package com.flyman3046.allnews;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.example.flyman3046.allnews.Model.ApiClient;
-import com.example.flyman3046.allnews.Model.Article;
-import com.example.flyman3046.allnews.Model.ArticleResponse;
-import com.example.flyman3046.allnews.Model.DataConstants;
+import com.flyman3046.allnews.Model.ApiClient;
+import com.flyman3046.allnews.Model.Article;
+import com.flyman3046.allnews.Model.ArticleResponse;
+import com.flyman3046.allnews.Model.DataConstants;
 
 import java.util.ArrayList;
 import java.util.List;

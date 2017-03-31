@@ -1,6 +1,4 @@
-package com.example.flyman3046.allnews.Model;
-
-import java.util.List;
+package com.flyman3046.allnews.Model;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

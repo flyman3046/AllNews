@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews.Model;
+package com.flyman3046.allnews.Model;
 
 import java.util.HashMap;
 import java.util.Map;

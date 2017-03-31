@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews;
+package com.flyman3046.allnews;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.flyman3046.allnews.Model.DataConstants;
+import com.flyman3046.allnews.Model.DataConstants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;

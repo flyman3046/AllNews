@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews;
+package com.flyman3046.allnews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.flyman3046.allnews.Model.Article;
-import com.example.flyman3046.allnews.Model.DataConstants;
+import com.flyman3046.allnews.Model.Article;
+import com.flyman3046.allnews.Model.DataConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.flyman3046.allnews;
+package com.flyman3046.allnews;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mSourceList.clear();
+        mArticlesList.clear();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArticleResponse>() {
